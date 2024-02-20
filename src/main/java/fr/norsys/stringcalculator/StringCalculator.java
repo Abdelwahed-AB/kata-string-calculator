@@ -12,10 +12,15 @@ public class StringCalculator {
         }
 
         String delim = findDelimeter(numbers);
+        DelimeterCleanUpResult res = clean_delimeter(delim);
+
+        delim = res.getDelimeter();
+
         if(delim.isEmpty()){
             delim = "[,\n]";
         }else{
-            numbers = numbers.substring(delim.length()+3); // +3 for '//'and'\n'
+            numbers = numbers.substring(delim.length()+3+res.getRemovedCharsLen()); // +3 for '//'and'\n'
+            delim = Pattern.quote(delim);
         }
 
         String[] nums_strs = numbers.split(delim);
@@ -39,6 +44,15 @@ public class StringCalculator {
         }else {
             return "";
         }
+    }
+
+    private DelimeterCleanUpResult clean_delimeter(String delim){
+        DelimeterCleanUpResult res = new DelimeterCleanUpResult();
+
+        res.setDelimeter(delim.replaceAll("[\\[\\]]", ""));
+        res.setRemovedCharsLen(delim.length() - res.getDelimeter().length());
+
+        return res;
     }
 
     private IntStream convert_num_arr_to_int_stream(String[] nums){

@@ -105,7 +105,6 @@ public class StringCalculatorTest {
     @Test
     @DisplayName("should accept delimeters of any length")
     public void should_accept_delimeters_of_any_length(){
-        Assertions.assertEquals(6, calc.add("//***\n1***5"));
-
+        Assertions.assertEquals(6, calc.add("//[***]\n1***5"));
     }
 }
