@@ -34,7 +34,7 @@ public class StringCalculatorTest {
     @ParameterizedTest
     @CsvSource({
             "'1,2', 3",
-            "'-1,5', 4"
+            "'1,5', 6"
     })
     @DisplayName("Should add two numbers")
     public void should_add_two_numbers(String nums, int expected){
@@ -44,8 +44,6 @@ public class StringCalculatorTest {
     @ParameterizedTest
     @CsvSource({
             "'1,2', 3",
-            "'-1,5', 4",
-            "'-1', -1",
             "'1,1, 1,1', 4",
             "'1,1,2,5,1', 10",
     })
@@ -57,8 +55,6 @@ public class StringCalculatorTest {
     @ParameterizedTest
     @CsvSource({
             "'1\n2', 3",
-            "'-1,5', 4",
-            "'-1', -1",
             "'1\n1, 1,1', 4",
             "'1,1,2,5,1', 10",
     })
@@ -76,10 +72,22 @@ public class StringCalculatorTest {
     @ParameterizedTest
     @CsvSource({
             "'//:\n1:2', 3",
-            "'//;\n-1;5', 4",
+            "'//;\n1;5', 6",
     })
     @DisplayName("Should support different delimeters")
     public void should_support_multiple_delimeters(String nums, int expected){
         Assertions.assertEquals(expected, calc.add(nums));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'-1, 1, 22', '-1'",
+            "'-1, 0, -5', '-1, -5'",
+            "'-133, -1',  '-133, -1'"})
+    @DisplayName("Should throw when called with negatives")
+    public void should_throw_when_called_with_negatives(String input, String negatives){
+        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, ()->calc.add(input));
+        System.out.print(exception.toString());
+        Assertions.assertEquals("negatives not allowed : ["+negatives+"]", exception.getMessage());
     }
 }
