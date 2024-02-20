@@ -73,5 +73,13 @@ public class StringCalculatorTest {
         Assertions.assertThrows(RuntimeException.class, ()->calc.add("1,\n2"));
     }
 
-
+    @ParameterizedTest
+    @CsvSource({
+            "'//:\n1:2', 3",
+            "'//;\n-1;5', 4",
+    })
+    @DisplayName("Should support different delimeters")
+    public void should_support_multiple_delimeters(String nums, int expected){
+        Assertions.assertEquals(expected, calc.add(nums));
+    }
 }
