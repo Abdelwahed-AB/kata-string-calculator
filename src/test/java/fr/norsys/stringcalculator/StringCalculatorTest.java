@@ -53,4 +53,25 @@ public class StringCalculatorTest {
     public void should_handle_an_unknown_amount_of_numbers(String nums, int expected){
         Assertions.assertEquals(expected, calc.add(nums));
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'1\n2', 3",
+            "'-1,5', 4",
+            "'-1', -1",
+            "'1\n1, 1,1', 4",
+            "'1,1,2,5,1', 10",
+    })
+    @DisplayName("Should handle new lines")
+    public void should_handle_new_lines(String nums, int expected){
+        Assertions.assertEquals(expected, calc.add(nums));
+    }
+
+    @Test
+    @DisplayName("Should throw when input is incorrect")
+    public void should_throw_when_input_is_incorrect(){
+        Assertions.assertThrows(RuntimeException.class, ()->calc.add("1,\n2"));
+    }
+
+
 }

@@ -8,7 +8,7 @@ public class StringCalculator {
             return 0;
         }
 
-        String[] nums_strs = numbers.split(",");
+        String[] nums_strs = numbers.split(",|\n");
 
         int sum = Arrays.stream(nums_strs)
                     .map(String::trim)
