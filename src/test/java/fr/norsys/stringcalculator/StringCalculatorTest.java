@@ -107,4 +107,17 @@ public class StringCalculatorTest {
     public void should_accept_delimeters_of_any_length(){
         Assertions.assertEquals(6, calc.add("//[***]\n1***5"));
     }
+
+    @Test
+    @DisplayName("Should allow multiple delimeters")
+    public void should_accept_multiple_delimeters(){
+        Assertions.assertEquals(9, calc.add("//[***][:]\n1***5:3"));
+    }
+
+    @Test
+    @DisplayName("Should allow multiple delimeters with length > 1 char")
+    public void should_accept_multiple_delimeters_with_more_than_1_char(){
+        Assertions.assertEquals(9, calc.add("//[***][???]\n1***5???3"));
+    }
+
 }
