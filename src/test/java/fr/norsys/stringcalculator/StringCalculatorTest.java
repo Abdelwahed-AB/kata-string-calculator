@@ -17,12 +17,12 @@ public class StringCalculatorTest {
         Assertions.assertEquals(0, calc.add(""));
     }
 
-    @Test
-    @DisplayName("Should throw when passed more than 2 numbers")
-    public void should_throw_when_passed_more_than_2_numbers() {
-        Assertions.assertThrows(RuntimeException.class, () ->
-                calc.add("1,2,3"));
-    }
+//    @Test
+//    @DisplayName("Should throw when passed more than 2 numbers")
+//    public void should_throw_when_passed_more_than_2_numbers() {
+//        Assertions.assertThrows(RuntimeException.class, () ->
+//                calc.add("1,2,3"));
+//    }
 
     @ParameterizedTest
     @ValueSource(strings = {"1", "2222", "33"})
@@ -38,6 +38,19 @@ public class StringCalculatorTest {
     })
     @DisplayName("Should add two numbers")
     public void should_add_two_numbers(String nums, int expected){
+        Assertions.assertEquals(expected, calc.add(nums));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'1,2', 3",
+            "'-1,5', 4",
+            "'-1', -1",
+            "'1,1, 1,1', 4",
+            "'1,1,2,5,1', 10",
+    })
+    @DisplayName("Should handle an unknown amount of numbers")
+    public void should_handle_an_unknown_amount_of_numbers(String nums, int expected){
         Assertions.assertEquals(expected, calc.add(nums));
     }
 }
