@@ -43,7 +43,7 @@ public class StringCalculator {
 
 
     public String extract_delimeter_regex(String input){
-        Pattern pattern = null;
+        Pattern pattern;
         if(!input.contains("[")) {
             pattern = Pattern.compile("//(.*)\n");
         }else{
