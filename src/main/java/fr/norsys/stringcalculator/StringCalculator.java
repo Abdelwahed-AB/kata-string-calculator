@@ -44,6 +44,7 @@ public class StringCalculator {
     private IntStream convert_num_arr_to_int_stream(String[] nums){
         return Arrays.stream(nums)
                 .map(String::trim)
-                .mapToInt(Integer::parseInt);
+                .mapToInt(Integer::parseInt)
+                .filter((i)-> i <= 1000);
     }
 }

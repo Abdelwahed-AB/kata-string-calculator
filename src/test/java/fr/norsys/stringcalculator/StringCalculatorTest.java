@@ -25,7 +25,7 @@ public class StringCalculatorTest {
 //    }
 
     @ParameterizedTest
-    @ValueSource(strings = {"1", "2222", "33"})
+    @ValueSource(strings = {"1", "222", "33"})
     @DisplayName("Should return the passed number when passed a number")
     public void should_return_number_when_passed_a_number(String num){
         Assertions.assertEquals(Integer.parseInt(num), calc.add(num));
@@ -89,5 +89,23 @@ public class StringCalculatorTest {
         RuntimeException exception = Assertions.assertThrows(RuntimeException.class, ()->calc.add(input));
         System.out.print(exception.toString());
         Assertions.assertEquals("negatives not allowed : ["+negatives+"]", exception.getMessage());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "'1\n2200', 1",
+            "'1\n1, 1001,1', 3",
+            "'1,1,2,5000,1', 5",
+    })
+    @DisplayName("Should ignore numbers bigger than 1000")
+    public void should_ignore_numbers_bigger_than_1000(String nums, int expected){
+        Assertions.assertEquals(expected, calc.add(nums));
+    }
+
+    @Test
+    @DisplayName("should accept delimeters of any length")
+    public void should_accept_delimeters_of_any_length(){
+        Assertions.assertEquals(6, calc.add("//***\n1***5"));
+
     }
 }
